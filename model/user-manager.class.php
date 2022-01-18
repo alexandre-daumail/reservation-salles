@@ -11,8 +11,7 @@ class UserManager extends Dbh
 
         if (!$stmt->execute(array(":login" => $login))) {
             $stmt = null;
-            header("location: ../index?error=stmtfailed");
-            exit();
+            throw new Exception("Impossible d'executer la requête!", 1);
         }
 
         $resultCheck = false;
