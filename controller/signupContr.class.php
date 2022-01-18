@@ -1,17 +1,9 @@
 <?php
+require_once('./model/user-manager.class.php');
 
-class SignupContr extends Signup{
+class SignupContr extends UserManager{
 
-    private $login;
-    private $password;
-    private $pwdrepeat;
-
-    public function __construct($login, $password, $pwdrepeat)
-    {
-        $this->login = $login;
-        $this->password = $password;
-        $this->pwdrepeat = $pwdrepeat;
-    }
+    public function __construct(public string $login, private string $password, private string $pwdrepeat){}    
 
     public function signupUser()
     {
@@ -74,7 +66,7 @@ class SignupContr extends Signup{
     private function loginTakenCheck()
     {
         $result = false;
-       if (!$this->checkUser($this->login)){
+       if (!$this->setUser($this->login, $this->password)){
            $result = false;
        }
        else{

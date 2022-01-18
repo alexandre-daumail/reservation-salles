@@ -1,10 +1,8 @@
-<?php
-$title = 'Création de profil';
-include_once 'header.php';
-?>
+<?php $title = "Inscription"; ?>
 
+<?php ob_start();?>
 <main class="container">
-    <form action="includes/signup.inc.php" method="post">
+    <form action="../index.php?action=inscription" method="post">
         <div class="container2">
             <h1>Création d'un compte utilisateur</h1>
             <hr>
@@ -34,21 +32,6 @@ include_once 'header.php';
     </form>
 </main>
 <?php
-
-if (isset($_GET["error"])) {
-    if ($_GET["error"] == "emptyinput") {
-        echo "<p>Remplissez tous les champs!</p>";
-    } else if ($_GET["error"] == "invalidlogin") {
-        echo "<p>Choisissez un pseudo correct!</p>";
-    } else if ($_GET["error"] == "mdpincorrect") {
-        echo "<p>Les mots de passe ne sont pas identiques!</p>";
-    } else if ($_GET["error"] == "usertaken") {
-        echo "<p>Ce pseudo est déjà pris!</p>";
-    } else if ($_GET["error"] == "echecstmt") {
-        echo "<p>Problème de connexion avec la base de donnée, veuillez contacter un admin.</p>";
-    } else if ($_GET["error"] == "aucune") {
-        echo "<p>Vous vous êtes inscrit avec succès! Bienvenue parmis nous :)</p>";
-    }
-}
-include_once 'footer.php';
+$content = ob_get_clean();
+require('template.php');
 ?>

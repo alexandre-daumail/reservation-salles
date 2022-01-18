@@ -1,19 +1,29 @@
 <?php
-$title = "Page d'Accueil";
+require_once('controller/signupContr.class.php');
 
-include 'header.php';
-?>
-<main>
+switch ($_GET['action']) {
+    case "connexion":
 
-<?php
-  if (isset($_SESSION["login"])) {
-    echo "<p>Bonjour à  toi " . $_SESSION["login"] . " !</p>";
-  }
-?>
+        header("location:view/connexionView.php");
+        break;
 
-</main>
+    case "inscription":
 
-<?php
-require_once 'footer.php';
-
-?>
+        $login = $_POST["login"];
+        $password = $_POST["password"];
+        $pwdrepeat = $_POST["pwdrepeat"];
+    
+        //Instancier la classe controlleur d'inscription (SignupContr)
+        $signup = new SignupContr($login, $password, $pwdrepeat);
+        
+        //Détection d'erreurs pour l'inscrition des admin et des utilisateurs
+        $signup->signupUser();
+    
+        //Retourner à la page d'accueil
+        header("location: index.php");
+        break;
+    
+    default:
+        header("location:view/indexView.php");
+        break;
+}
