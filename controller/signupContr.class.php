@@ -1,31 +1,8 @@
 <?php
 require_once('./model/user-manager.class.php');
 
-class SignupContr extends UserManager
-{
 
-    public function __construct(public string $login, private string $password, private string $pwdrepeat)
-    {}
-
-    public function signupUser()
-    {
-
-        if ($this->emptyImput() == false) {
-            throw new Exception("Veuillez remplir les camps requis", 1);
-        }
-
-        if ($this->invalidlogin() == false) {
-            throw new Exception("Pseudo incorrect", 1);
-            
-        }
-        if ($this->loginTakenCheck() == false) {
-            throw new Exception("Pseudo pris", 1);            
-        }
-
-        $this->setUser($this->login, $this->password);
-    }
-
-    private function emptyImput()
+    function emptyImput()
     {
         $result = false;
         if (empty($this->login) || empty($this->password) || empty($this->pwdrepeat)) {
@@ -36,7 +13,7 @@ class SignupContr extends UserManager
         return $result;
     }
 
-    private function invalidlogin()
+    function invalidlogin()
     {
         $result = false;
         if (!preg_match("/^[a-zA-Z0-9]*$/", $this->login)) {
@@ -47,7 +24,7 @@ class SignupContr extends UserManager
         return $result;
     }
 
-    private function pwdMatch()
+    function pwdMatch()
     {
         $result = false;
         if ($this->password !== $this->pwdrepeat) {
@@ -60,7 +37,7 @@ class SignupContr extends UserManager
 
 
 
-    private function loginTakenCheck()
+    function loginTakenCheck()
     {
         $result = false;
         if (!$this->setUser($this->login, $this->password)) {
@@ -70,4 +47,32 @@ class SignupContr extends UserManager
         }
         return $result;
     }
-}
+
+    function signupUser($login, $password, $pwdrepeat)
+    {
+        if (emptyImput() == false) {
+            throw new Exception("Veuillez remplir tous les camps", 1);
+            exit();
+        }
+
+        if (invalidlogin() == false) {
+            throw new Exception("Pseudo incorrect", 1);
+            exit();
+
+        }
+        if (loginTakenCheck() == false) {
+            throw new Exception("Pseudo pris", 1);
+            exit();            
+        }
+
+        if (pwdMatch() == false) {
+            throw new Exception("Les mots de passe ne correspondent pas", 1);
+            exit();            
+        }
+
+        $userManager = new UserManager($login, $password, $pwdrepeat);
+
+        $userCreated = $userManager->addUser();
+
+    }
+

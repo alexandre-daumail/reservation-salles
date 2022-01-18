@@ -4,6 +4,9 @@ require("Dbh.class.php");
 class UserManager extends Dbh
 {
 
+    //gather form data
+    public function __construct(public string $login, private string $password, private string $pwdrepeat){}
+
     //checks if user in database
     protected function checkUser($login)
     {
@@ -11,7 +14,7 @@ class UserManager extends Dbh
 
         if (!$stmt->execute(array(":login" => $login))) {
             $stmt = null;
-            throw new Exception("Impossible d'executer la requête!", 1);
+            throw new Exception("Impossible d'executer la requête checkUser, contacter l'admin.", 1);
         }
 
         $resultCheck = false;
@@ -24,18 +27,14 @@ class UserManager extends Dbh
     }
 
     //adds the user in the db
-    protected function setUser($login, $password)
+    public function addUser($login, $password)
     {
-        $stmt = $this->connect()->prepare('INSERT INTO utilisateurs (login, password) VALUES  (:login, :password);');
+        $addUser = $this->dbh->prepare('INSERT INTO utilisateurs (login, password) VALUES  (:login, :password);');
 
         $hashedpassword = password_hash($password, PASSWORD_DEFAULT);
 
-        if (!$stmt->execute(array(':login' => $login, ':password' => $hashedpassword))) {
-            $stmt = null;
-            header("location: ../index?error=stmtfailed");
-            exit();
-        }
+        $userCreated = $addUser->execute(array(':login' => $login, ':password' => $hashedpassword));        
 
-        $stmt = null;
+        return $userCreated;
     }
 }

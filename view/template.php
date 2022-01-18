@@ -11,7 +11,7 @@
     <body>
         <header>
             <ul>
-            <li><a href="index.php">Accueil</a></li>
+            <li><a href="../index.php">Accueil</a></li>
             <li><a href="planning.php">Planning</a></li>
             <?php
             if (isset($_SESSION["id"])) {
