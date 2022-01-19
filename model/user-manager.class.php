@@ -5,38 +5,27 @@ class UserManager extends Dbh
 {
 
     //checks if user in database
-    protected function checkUser($login)
+    protected function getUser($login)
     {
         $stmt = $this->connect()->prepare('SELECT login FROM utilisateurs WHERE login = :login;');
 
-        if (!$stmt->execute(array(":login" => $login))) {
-            $stmt = null;
-            header("location: ../index?error=stmtfailed");
-            exit();
+        $getUser = $stmt->execute(array(":login" => $login));
+            
+        if ($getUser === false){
+            throw new Exception("Cet utilisateur n'existe pas", 1);
         }
-
-        $resultCheck = false;
-        if ($stmt->rowCount() > 0) {
-            $resultCheck = false;
-        } else {
-            $resultCheck = true;
-        }
-        return $resultCheck;
+        return $getUser;         
     }
 
     //adds the user in the db
-    protected function setUser($login, $password)
+    public function addUser($login, $password)
     {
-        $stmt = $this->connect()->prepare('INSERT INTO utilisateurs (login, password) VALUES  (:login, :password);');
+        $addUser = $this->connect()->prepare('INSERT INTO utilisateurs (login, password) VALUES  (:login, :password);');
 
         $hashedpassword = password_hash($password, PASSWORD_DEFAULT);
 
-        if (!$stmt->execute(array(':login' => $login, ':password' => $hashedpassword))) {
-            $stmt = null;
-            header("location: ../index?error=stmtfailed");
-            exit();
-        }
+        $userCreated = $addUser->execute(array(':login' => $login, ':password' => $hashedpassword));        
 
-        $stmt = null;
+        return $userCreated;
     }
 }

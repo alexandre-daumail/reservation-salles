@@ -1,29 +1,28 @@
 <?php
-require_once('controller/signupContr.class.php');
+require_once('controller/signup-contr.php');
+require_once('controller/function.php');
 
-switch ($_GET['action']) {
-    case "connexion":
+try {
+    switch ($_GET['action']) {
+        case "connexion":
 
-        header("location:view/connexionView.php");
-        break;
+            header("location:view/connexionView.php");
+            break;
 
-    case "inscription":
+        case "inscription":
 
-        $login = $_POST["login"];
-        $password = $_POST["password"];
-        $pwdrepeat = $_POST["pwdrepeat"];
+            $login = test_input($_POST["login"]);
+            $password = test_input($_POST["password"]);
+            $pwdrepeat = test_input($_POST["pwdrepeat"]);        
     
-        //Instancier la classe controlleur d'inscription (SignupContr)
-        $signup = new SignupContr($login, $password, $pwdrepeat);
-        
-        //Détection d'erreurs pour l'inscrition des admin et des utilisateurs
-        $signup->signupUser();
-    
-        //Retourner à la page d'accueil
-        header("location: index.php");
-        break;
-    
-    default:
-        header("location:view/indexView.php");
-        break;
+            signupUser($login, $password, $pwdrepeat);
+            header("location:view/indexView.php");
+            break;
+
+        default:
+            header("location:view/indexView.php");
+            break;
+    }
+} catch (Exception $e) {
+    echo 'Erreur : ' . $e->getMessage();
 }
