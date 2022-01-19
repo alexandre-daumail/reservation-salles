@@ -1,5 +1,6 @@
 <?php
-require_once('controller/signupContr.class.php');
+require_once('controller/signup-contr.php');
+require_once('controller/function.php');
 
 try {
     switch ($_GET['action']) {
@@ -10,18 +11,12 @@ try {
 
         case "inscription":
 
-            $login = $_POST["login"];
-            $password = $_POST["password"];
-            $pwdrepeat = $_POST["pwdrepeat"];
-
-            //Instancier la classe controlleur d'inscription (SignupContr)
-            $signup = new SignupContr($login, $password, $pwdrepeat);
-
-            //Détection d'erreurs pour l'inscrition des admin et des utilisateurs
-            $signup->signupUser();
-
-            //Retourner à la page d'accueil
-            header("location: index.php");
+            $login = test_input($_POST["login"]);
+            $password = test_input($_POST["password"]);
+            $pwdrepeat = test_input($_POST["pwdrepeat"]);        
+    
+            signupUser($login, $password, $pwdrepeat);
+            header("location:view/indexView.php");
             break;
 
         default:

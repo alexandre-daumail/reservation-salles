@@ -2,7 +2,7 @@
 
 <?php ob_start();?>
 <main class="container">
-    <form action="../index.php?action=inscription" method="post">
+    <form action="<?= htmlspecialchars('../index.php?action=inscription');?>" method="post">
         <div class="container2">
             <h1>Création d'un compte utilisateur</h1>
             <hr>

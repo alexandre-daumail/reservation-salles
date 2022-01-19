@@ -4,10 +4,18 @@ ob_start();
 ?>
 
 <main>
-    Bienvenue sur le site de réservation du Studio Son de la Plateforme!
-</main>
+<tbody>
+    <thead>
+
+    </thead>
+</tbody></main>
 
 <?php
 $content = ob_get_clean();
 require('template.php');
 ?>
+<!-- strtotime
+faire des boucles for pour le tableau
+
+on peut utiliser endofor pour fermer une boucle for
+-->

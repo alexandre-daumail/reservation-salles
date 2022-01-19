@@ -1,2 +1,3 @@
 - lorsqu'on s'inscrit, la requête se lance deux fois
 - amélioration à faire au niveau du routeur et des contrôleurs: 
+- améliorer les test dans signupContr
