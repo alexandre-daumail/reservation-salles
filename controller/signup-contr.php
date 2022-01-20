@@ -1,5 +1,5 @@
 <?php
-require_once('./model/user-manager.class.php');
+require_once('./model/user.class.php');
 
     function signupUser($login, $password, $pwdrepeat)
     {
@@ -17,7 +17,7 @@ require_once('./model/user-manager.class.php');
             throw new Exception("Les mots de passe ne correspondent pas", 1);
         }
 
-        $userManager = new UserManager();
+        $userManager = new User();
 
         $userCreated = $userManager->addUser($login, $password, $pwdrepeat);
 

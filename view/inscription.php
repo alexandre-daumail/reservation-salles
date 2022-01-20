@@ -1,6 +1,8 @@
-<?php $title = "Inscription"; ?>
+<?php
+session_start();
+$title = "Inscription";ob_start();
+?>
 
-<?php ob_start();?>
 <main class="container">
     <form action="<?= htmlspecialchars('../index.php?action=inscription');?>" method="post">
         <div class="container2">
@@ -31,6 +33,7 @@
         </div>
     </form>
 </main>
+
 <?php
 $content = ob_get_clean();
 require('template.php');

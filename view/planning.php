@@ -1,21 +1,20 @@
 <?php
+session_start();
 $title = "Accueil Studio Son - La Plateforme";
 ob_start();
 ?>
 
 <main>
-<tbody>
-    <thead>
+    <?php
+    include '../model/calendar.class.php';
 
-    </thead>
-</tbody></main>
+    $calendar = new Calendar();
+
+    echo $calendar->show();
+    ?>
+</main>
 
 <?php
 $content = ob_get_clean();
 require('template.php');
 ?>
-<!-- strtotime
-faire des boucles for pour le tableau
-
-on peut utiliser endofor pour fermer une boucle for
--->

@@ -1,4 +1,5 @@
 <?php
+session_start();
 $title = "Accueil Studio Son - La Plateforme";
 ob_start();
 ?>
