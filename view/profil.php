@@ -1,57 +1,51 @@
 <?php
 session_start();
-$title = "Accueil Studio Son - La Plateforme";
+$title = "Profil de " . $_SESSION["login"];
 ob_start();
+require_once('../model/user.class.php')
 ?>
 
 <main>
-<h1>Voici les information de votre profil : </h1>
-        <h2>
-            <?php 
-            $user = new User;
-            $user->getAllInfos();
-            if (isset($_REQUEST["delete"])) {
-                $user->delete();
-                exit();
-            }
-            ?>
-            <form action="" method="post">
-                <label for="login">
-                    <h3>Login</h3>
-                </label>
-                <input type="text" class="box-input" name="login" id="login" placeholder="Nom d'utilisateur" required />
+    <h1><?= $_SESSION["login"]; ?> , vous pouvez modifier votre profil de connexion ici: </h1>
+    <h2>
+        <form action="../index.php?action=modify_login" method="post">
+            <label for="login">
+                <h3>Login</h3>
+            </label>
+            <input type="text" class="box-input" name="login" id="login" placeholder="Nom d'utilisateur" required />
 
-                <label for="1st">
-                    <h3>Prénom</h3>
-                </label>
-                <input type="text" class="box-input" name="firstname" id="1st" placeholder="Prénom" required />
+            <label for="password">
+                <h3>Mot de passe</h3>
+            </label>
+            <input type="password" placeholder="Mot de passe" name="password" id="password" required>
+            <hr>
 
-                <label for="last">
-                    <h3>Nom</h3>
-                </label>
-                <input type="text" class="box-input" name="lastname" id="last" placeholder="Nom d'utilisateur" required />
+            <button type="submit" name="update">Modifier identifiant</button>
+        </form>
 
-                <label for="password">
-                    <h3>Mot de passe</h3>
-                </label>
-                <input type="password" placeholder="Mot de passe" name="password" id="password" required>
+        <form action="../index.php?action=modify_password" method="post">
+            <label for="old-pwd">
+                <h3>Ancien mot de passe</h3>
+            </label>
+            <input type="password" name="pwd" id="old-pwd" required>
 
-                <label for="email">
-                    <h3>Email</h3>
-                </label>
-                <input type="email" placeholder="email" name="email" id="email" required>
+            <label for="new-pwd">
+                <h3>Nouveau mot de passe</h3>
+            </label>
+            <input type="password" name="new-pwd" id="new-pwd" required>
 
-                <hr>
+            <label for="new-pwd">
+                <h3>Confirmation</h3>
+            </label>
+            <input type="password" name="new-pwd" id="new-pwd" required>
+            <hr>
 
-                <button type="submit" name="update">Modifier profil</button>
-
-                
-            </form>
-            <form action="">
-                <button name="delete">Supprimer profil</button>
-            </form>
-        </h2>
-
+            <button type="submit" name="update">Modifier mot de passe</button>
+        </form>
+        <form action="">
+            <button name="delete">Supprimer profil</button>
+        </form>
+    </h2>
 </main>
 
 <?php

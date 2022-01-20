@@ -1,6 +1,7 @@
 <?php
 session_start();
-$title = "Inscription";ob_start();
+$title = "Inscription";
+ob_start();
 ?>
 
 <main class="container">

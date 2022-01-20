@@ -4,22 +4,22 @@ require("Dbh.class.php");
 class User extends Dbh
 {
 
-    //checks if user in database
-    protected function getUser($login)
+    //returns bool if login checked is in DB 
+    protected function userExists($login)
     {
         $stmt = $this->connect()->prepare('SELECT login FROM utilisateurs WHERE login = :login;');
 
-        $getUser = $stmt->execute(array(":login" => $login));
+        $userExists = $stmt->execute(array(":login" => $login));
 
-        return $getUser;
+        return $userExists;
     }
 
     //adds the user in the db
     public function addUser($login, $password)
     {
-        $this->getUser($login);
+        $this->userExists($login);
 
-        if (!isset($getUser)) {
+        if ($this->getUser !== true) {
 
             $addUser = $this->connect()->prepare('INSERT INTO utilisateurs (login, password) VALUES  (:login, :password);');
 
@@ -60,32 +60,34 @@ class User extends Dbh
 
             if ($stmt->rowCount() == 0) {
                 throw new Exception("Utilisateur inconnu", 1);
-             }
+            }
 
             $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-             $_SESSION["login"] = $user[0]["login"];
+            $_SESSION["login"] = $user[0]["login"];
+            $_SESSION["id"] = $user[0]["id"];
         }
+    }
+
+    //Gets User infos
+    public function modifyUser()
+    {
         
     }
 
-    public function getAllInfos()
-  {
-    $id = $_SESSION["id"];
-    $query = "SELECT login, email, firstname, lastname FROM `utilisateurs` WHERE id='$id'";
-    $result = mysqli_query($this->conn, $query);
-    $user = mysqli_fetch_assoc($result);
+    //deletes and disconnects user
+    public function delete()
+    {
+        $id = $_SESSION["id"];
+        $stmt = $this->connect()->prepare('DELETE FROM `utilisateurs` WHERE `utilisateurs`.`id` = :id ');
 
-    //Tableau avec les infos user:
-    echo '<table border = 1><thead>';
-    foreach ($user as $key => $value) {
-      echo '<th>' . $key . '</th>';
-    }
-    echo '</thead><tbody><tr>';
-    foreach ($user as $key => $value) {
-      echo "<td>" . $value . "</td>";
-    }
-    echo '</tbody></table>';
-  }
+        if (!$stmt->execute(array(':id' => $id))) {
+            throw new Exception("Impossible de supprimer l'utilisateur", 1);
+        }
 
+        session_unset();
+        session_destroy();
+
+        header("location: ../index.php");
+    }
 }
