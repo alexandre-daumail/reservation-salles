@@ -1,5 +1,6 @@
 <?php
-$title = "Accueil Studio Son - La Plateforme";
+session_start();
+$title = "Formulaire de réservation";
 ob_start();
 ?>
 
