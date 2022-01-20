@@ -5,22 +5,29 @@ class User extends Dbh
 {
 
     //returns bool if login checked is in DB 
-    protected function userExists($login)
+    private function _checkUser($login)
     {
-        $stmt = $this->connect()->prepare('SELECT login FROM utilisateurs WHERE login = :login;');
+        $stmt = $this->connect()->prepare('SELECT login FROM utilisateurs WHERE login = :login ;');
 
-        $userExists = $stmt->execute(array(":login" => $login));
+        if (!$stmt->execute(array(":login" => $login))) {
+            throw new Exception("Erreur requête 'checkUser'", 1);
+        }
 
-        return $userExists;
+        $resultCheck = false;
+        if ($stmt->rowCount() > 0) {
+            $resultCheck = false;
+        } else {
+            $resultCheck = true;
+        }
+        return $resultCheck;
     }
 
     //adds the user in the db
     public function addUser($login, $password)
     {
-        $this->userExists($login);
-
-        if ($this->getUser !== true) {
-
+        if (!$this->_checkUser($login)) {
+            throw new Exception("Pseudo pris", 1);
+        } else {
             $addUser = $this->connect()->prepare('INSERT INTO utilisateurs (login, password) VALUES  (:login, :password);');
 
             $hashedpassword = password_hash($password, PASSWORD_DEFAULT);
@@ -28,13 +35,10 @@ class User extends Dbh
             $userCreated = $addUser->execute(array(':login' => $login, ':password' => $hashedpassword));
 
             return $userCreated;
-        } else {
-            throw new Exception("Impossible de créer l'utilisateur", 1);
         }
     }
 
-    //starts a session with the user's information
-    public function loginUser($login, $password)
+    private function _checkPwd($login, $password)
     {
         $getPwd = $this->connect()->prepare('SELECT password FROM utilisateurs WHERE login = :login ;');
 
@@ -49,30 +53,60 @@ class User extends Dbh
         $passwordHashed = $getPwd->fetchAll(PDO::FETCH_ASSOC);
         $checkpassword = password_verify($password, $passwordHashed[0]["password"]);
 
-        if ($checkpassword === false) {
-            throw new Exception("Mot de passe incorrect", 1);
-        } elseif ($checkpassword === true) {
-            $stmt = $this->connect()->prepare('SELECT * FROM utilisateurs WHERE login = :login AND password = :password ;');
+        return $checkpassword . $passwordHashed[0]["password"];
+    }
 
-            if (!$stmt->execute(array(':login' => $login, ':password' => $passwordHashed[0]["password"]))) {
-                throw new Exception("Mot de passe ou login incorrect", 1);
+    //starts a session with the user's information
+    public function loginUser($login, $password)
+    {
+        $stmt = $this->connect()->prepare('SELECT password FROM utilisateurs WHERE login = ? ;');
+
+        if (!$stmt->execute(array($login))) {
+            $stmt = null;
+            header("location: ../index?error=stmtfailed");
+            exit();
+        }
+
+        if ($stmt->rowCount() == 0) {
+            $stmt = null;
+            header("location: ../index.php?error=usernotfound");
+            exit();
+        }
+
+        $passwordHashed = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $checkpassword = password_verify($password, $passwordHashed[0]["password"]);
+
+        if ($checkpassword == false) {
+            $stmt = null;
+            header("location: ../index.php?error=wrongpassword");
+            exit();
+        } elseif ($checkpassword == true) {
+            $stmt = $this->connect()->prepare('SELECT * FROM utilisateurs WHERE login = ? AND password = ? ;');
+
+            if (!$stmt->execute(array($login, $passwordHashed[0]["password"]))) {
+                $stmt = null;
+                header("location: ../index?error=stmtfailed");
+                exit();
             }
 
             if ($stmt->rowCount() == 0) {
-                throw new Exception("Utilisateur inconnu", 1);
+                $stmt = null;
+                header("location: ../index.php?error=usernotfound");
+                exit();
             }
 
             $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+            session_start();
             $_SESSION["login"] = $user[0]["login"];
-            $_SESSION["id"] = $user[0]["id"];
         }
+
+        $stmt = null;
     }
 
     //Gets User infos
     public function modifyUser()
     {
-        
     }
 
     //deletes and disconnects user

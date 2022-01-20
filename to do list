@@ -1,4 +1,11 @@
 
-- module connexion
+- module User
+    - simplifier classe user (surtout login) -> fait
+    - débuger login
+    - ajouter méthode modify pwd
+    - ajouter méthode modify login
+    - ajouter méthode delete user
+
 - module planning
 - module réservation
+- gestion affichage erreurs

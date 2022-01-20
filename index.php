@@ -11,7 +11,7 @@ try {
             $pwdrepeat = test_input($_POST["pwdrepeat"]);
 
             signupUser($login, $password, $pwdrepeat);
-            header("location:view/connexion.php");
+            header("location:view/connexion.php?inscriptionok");
             break;
 
         case "connexion":
@@ -39,8 +39,6 @@ try {
 
             header("location: view/connexion.php");
             break;
-
-
 
         default:
             header("location:view/indexView.php");
