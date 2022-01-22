@@ -43,7 +43,7 @@ class User extends Dbh
         }
 
         if ($getPwd->rowCount() == 0) {
-            throw new Exception("Aucun mdp enregistré", 1);
+            throw new Exception("Login ou mot de passe incorrect", 1);
         }
 
         $passwordHashed = $getPwd->fetchAll(PDO::FETCH_ASSOC);
