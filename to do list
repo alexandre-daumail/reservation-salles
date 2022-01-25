@@ -1,7 +1,7 @@
 
 - module User
     - simplifier classe user (surtout login) -> fait
-    - débuger login
+    - débuger login -> fait
     - ajouter méthode modify pwd
     - ajouter méthode modify login
     - ajouter méthode delete user

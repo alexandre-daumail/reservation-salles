@@ -51,7 +51,7 @@ function loginUser($login, $password)
 
 function modifyUser($login, $password)
 {
-    if (empty($login) || empty($password) || empty($pwdrepeat)) {
+    if (empty($login) || empty($password)) {
         throw new Exception("Veuillez remplir tous les camps", 1);
     }
 

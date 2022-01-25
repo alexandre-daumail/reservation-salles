@@ -13,7 +13,7 @@
             <li><a href="../index.php">Accueil</a></li>
             <li><a href="planning.php">Planning</a></li>
             <?php
-            if (isset($_SESSION["login"])) {
+            if (isset($_SESSION["id"])) {
                 echo "<li><a href='reservation-form.php'>Réserver</a></li>";
                 echo "<li><a href='profil.php'>Profil</a></li>";
                 echo "<li><a href='../index.php?action=logout'>Déconnexion</a></li>";

@@ -1,5 +1,10 @@
 <?php
+
+
 session_start();
+if(!isset($_SESSION['id'])){
+    header('location:connexion.php');
+}else {
 $title = "Formulaire de réservation";
 ob_start();
 ?>
@@ -10,5 +15,6 @@ ob_start();
 
 <?php
 $content = ob_get_clean();
+}
 require('template.php');
 ?>

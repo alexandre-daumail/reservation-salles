@@ -1,10 +1,11 @@
 <?php
-class Calendar
+class Planning
 {
 
     /********************* PROPERTY ********************/
-    
     private $dayLabels = array("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun");
+
+    private $slots = array("8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00");
 
     private $currentYear = 0;
 
@@ -153,9 +154,9 @@ class Calendar
 
         $content = '';
 
-        foreach ($this->dayLabels as $index => $label) {
+        foreach ($this->slots as $index => $label) {
 
-            $content .= '<li class="' . ($label == 6 ? 'end title' : 'start title') . ' title">' . $label . '</li>';
+            $content .= '<li class="' . ($label == 11 ? 'end title' : 'start title') . ' title">' . $label . '</li>';
         }
 
         return $content;

@@ -8,7 +8,7 @@ require_once('../model/user.class.php')
 <main>
     <h1><?= $_SESSION["login"]; ?> , vous pouvez modifier votre profil de connexion ici: </h1>
     <h2>
-        <form action="../index.php?action=modify_login" method="post">
+        <form action="../index.php?action=modify_login" method="post" id="login">
             <label for="login">
                 <h3>Login</h3>
             </label>
@@ -20,7 +20,7 @@ require_once('../model/user.class.php')
             <input type="password" placeholder="Mot de passe" name="password" id="password" required>
             <hr>
 
-            <button type="submit" name="update">Modifier identifiant</button>
+            <button type="submit" form="login" name="update">Modifier identifiant</button>
         </form>
 
         <form action="../index.php?action=modify_password" method="post">
