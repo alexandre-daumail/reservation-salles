@@ -4,34 +4,23 @@ $title = "Inscription";
 ob_start();
 ?>
 
-<main class="container">
-    <form action="<?= htmlspecialchars('../index.php?action=inscription');?>" method="post">
-        <div class="container2">
-            <h1>Création d'un compte utilisateur</h1>
-            <hr>
+<main>
+    <form action="<?= htmlspecialchars('../index.php?action=inscription'); ?>" method="post">
 
-            <label for="login">
-                <h3>Login</h3>
-            </label>
-            <input type="text" class="box-input" name="login" id="login" placeholder="Nom d'utilisateur">
+        <h1>Création d'un compte utilisateur</h1>
+        <hr>
 
-            <label for="password">
-                <h3>Mot de passe</h3>
-            </label>
-            <input type="password" placeholder="Mot de passe" name="password" id="password">
+        <label for="login"> Login </label>
+        <input type="text" class="box-input" name="login" id="login" placeholder="Nom d'utilisateur">
 
-            <label for="pwdrepeat">
-                <h3>Confirmation Mdp</h3>
-            </label>
-            <input type="password" placeholder="Confirmation Mdp" name="pwdrepeat" id="pwdrepeat">
+        <label for="password"> Mot de passe </label> <input type="password" placeholder="Mot de passe" name="password" id="password">
 
-            <hr>
+        <label for="pwdrepeat"> Confirmation Mdp </label>
+        <input type="password" placeholder="Confirmation Mdp" name="pwdrepeat" id="pwdrepeat">
+        <button>inscription</button>
+        <hr>
 
-            <button class="registerbtn" type="submit" name="submit">Inscription</button>
-        </div>
-        <div class="container2 bottom">
-            <p class="box-register">Déjà inscrit? <a href="connexion.php">Connectez-vous ici</a></p>
-        </div>
+        <p class="box-register">Déjà inscrit? <a href="connexion.php">Connectez-vous ici</a></p>
     </form>
 </main>
 
