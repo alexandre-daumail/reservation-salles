@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once('controller/user.contr.php');
+require_once('controller/reservation.contr.php');
 
 try {
     switch ($_GET['action']) {
@@ -38,6 +39,17 @@ try {
             session_destroy();
 
             header("location: view/connexion.php");
+            break;
+
+        case 'reservation':
+            
+            $title = test_input($_POST['title']);
+            $description = test_input($_POST['description']);
+            $startDate = test_input($_POST['start-date']);            
+            $startTime = test_input($_POST['start-time']);            
+            setReservation ($title, $description, $startDate, $startTime);
+            header("location:view/planning.php?reservationOK");
+            
             break;
 
         default:

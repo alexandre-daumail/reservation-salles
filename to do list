@@ -7,5 +7,11 @@
     - ajouter méthode delete user
 
 - module planning
+
 - module réservation
+    - addEvent -> fait
+    - modifyEvent
+    - checkEvent
+    - deleteEvent
+
 - gestion affichage erreurs

@@ -9,15 +9,7 @@ ob_start();
 
 <main>
     <h1>Bienvenue<?php if (isset($_SESSION["login"])){echo " " . $_SESSION["login"];}?>, voici le planning de la semaine :</h1>
-    <?php
-    // $calendar = new Calendar();
-
-    // echo $calendar->show();
-
-    $planning = new Planning();
-
-    echo $planning->show();
-    ?>
+    
 </main>
 
 <?php

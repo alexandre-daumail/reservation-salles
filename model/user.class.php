@@ -1,5 +1,8 @@
 <?php
-require("Dbh.class.php");
+
+namespace LaPlateforme\ReservationSalles\Model;
+
+require_once("Dbh.class.php");
 
 class User extends Dbh
 {
@@ -9,7 +12,7 @@ class User extends Dbh
         $stmt = $this->connect()->prepare('SELECT login FROM utilisateurs WHERE login = :login ;');
 
         if (!$stmt->execute(array(":login" => $login))) {
-            throw new Exception("Erreur requête 'checkUser'", 1);
+            throw new \Exception("Erreur requête 'checkUser'", 1);
         }
 
         $resultCheck = false;
@@ -25,7 +28,7 @@ class User extends Dbh
     public function addUser($login, $password)
     {
         if (!$this->_checkUser($login)) {
-            throw new Exception("Pseudo pris", 1);
+            throw new \Exception("Pseudo pris", 1);
         } else {
             $addUser = $this->connect()->prepare('INSERT INTO utilisateurs (login, password) VALUES  (:login, :password);');
 
@@ -42,14 +45,14 @@ class User extends Dbh
         $getPwd = $this->connect()->prepare('SELECT password FROM utilisateurs WHERE login = :login ;');
 
         if (!$getPwd->execute(array(':login' => $login))) {
-            throw new Exception("Echec de connexion, contacter un admin", 1);
+            throw new \Exception("Echec de connexion, contacter un admin", 1);
         }
 
         if ($getPwd->rowCount() == 0) {
-            throw new Exception("Login ou mot de passe incorrect", 1);
+            throw new \Exception("Login ou mot de passe incorrect", 1);
         }
 
-        $passwordHashed = $getPwd->fetchAll(PDO::FETCH_ASSOC);
+        $passwordHashed = $getPwd->fetchAll(\PDO::FETCH_ASSOC);
         $checkpassword = password_verify($password, $passwordHashed[0]["password"]);
 
         return $checkpassword;
@@ -79,7 +82,7 @@ class User extends Dbh
                 exit();
             }
 
-            $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $user = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
             $_SESSION["login"] = $login;
             $_SESSION["id"] = $user[0]["id"];
@@ -100,7 +103,7 @@ class User extends Dbh
         $stmt = $this->connect()->prepare('DELETE FROM `utilisateurs` WHERE `utilisateurs`.`id` = :id ');
 
         if (!$stmt->execute(array(':id' => $id))) {
-            throw new Exception("Impossible de supprimer l'utilisateur", 1);
+            throw new \Exception("Impossible de supprimer l'utilisateur", 1);
         }
 
         session_unset();

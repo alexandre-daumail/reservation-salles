@@ -1,5 +1,5 @@
 <?php
-
+namespace LaPlateforme\ReservationSalles\Model;  
 //connexion à la base de donnée
 class Dbh
 {
@@ -9,10 +9,10 @@ class Dbh
         try {
             $username = "root";
             $password = "";
-            $dbh = new PDO('mysql:host=localhost; dbname=reservationsalles', $username, $password);
+            $dbh = new \PDO('mysql:host=localhost; dbname=reservationsalles', $username, $password);
             return $dbh;
             
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             print "Error! :" . $e->getMessage() . "<br/>";
             die();
         }
