@@ -12,15 +12,8 @@ if (!isset($_SESSION['id'])) {
     <main>
 
         <form action="<?= htmlspecialchars('../index.php?action=reservation'); ?>" method="post">
-            <!-- id, int, clé primaire et Auto Incrément 
--   titre, varchar de taille 255
--   description, TEXT 
--   debut, datetime
--   fin, datetime
--   id_utilisateur -->
-
-            <?php var_dump($_SESSION);?>
             <h1>Bienvenue sur le site de réservation du Studio Son de la Plateforme!</h1>
+
 
             <label for="title">Titre de la réservation</label>
             <input type="text" name="title" id="title" placeholder="Entrez un titre">

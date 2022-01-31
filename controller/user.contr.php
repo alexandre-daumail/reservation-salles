@@ -49,7 +49,7 @@ function loginUser($login, $password)
     $user->loginUser($login, $password);
 }
 
-function modifyUser($login, $password)
+function modifyUser($login, $newLogin, $password)
 {
     if (empty($login) || empty($password)) {
         throw new Exception("Veuillez remplir tous les camps", 1);
@@ -61,5 +61,36 @@ function modifyUser($login, $password)
 
     $user = new LaPlateforme\ReservationSalles\Model\User;
 
-    $user->modifyUser($login, $password);
+    $user->modifyUser($login, $newLogin, $password);
+}
+
+function modifyPwd($login, $newPwd, $pwdRepeat, $password)
+{
+    if (empty($newPwd) || empty($pwdRepeat)|| empty($password)){
+        throw new Exception("Veuillez remplir tous les camps", 1);
+    }
+
+    if ($newPwd !== $pwdRepeat) {
+        throw new Exception("Les mots de passe ne correspondent pas", 1);
+    }
+
+    $userManager = new LaPlateforme\ReservationSalles\Model\User();
+
+    $userCreated = $userManager->modifyPwd($login, $password, $newPwd);
+
+    if ($userCreated === false) {
+        throw new Exception("Impossible de créer l'utilisateur", 1);
+    }
+}
+
+
+function deleteUser($login, $password)
+{
+    if (empty($password)){
+        throw new Exception("Veuillez remplir tous les camps", 1);
+    }
+
+    $user = new LaPlateforme\ReservationSalles\Model\User;
+
+    $user->deleteUser($login, $password);
 }

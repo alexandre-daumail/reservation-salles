@@ -26,11 +26,30 @@ try {
 
         case "modify_login":
 
-            $login = test_input($_POST["login"]);
+            $login = $_SESSION["login"];
+            $newLogin = test_input($_POST["login"]);
             $password = test_input($_POST["password"]);
 
-            modifyUser($login, $password);
-            header("location:view/profil.php");
+            modifyUser($login, $newLogin, $password);
+            header("location:view/profil.php?login_modifié");
+            break;
+            
+        case "modify_password":
+
+            $password = test_input($_POST["password"]);
+            $newPwd = test_input($_POST["newPwd"]);
+            $pwdRepeat = test_input($_POST["pwdRepeat"]);
+
+            modifyPwd($_SESSION["login"], $newPwd, $pwdRepeat, $password);
+            header("location:view/profil.php?mdp_modifié");
+            break;
+
+        case 'delete':
+
+            $password = test_input($_POST["password"]);
+            deleteUser($_SESSION["login"], $password);
+
+            header("location:index.php?deleted");
             break;
 
         case "logout":
@@ -42,15 +61,16 @@ try {
             break;
 
         case 'reservation':
-            
+
             $title = test_input($_POST['title']);
             $description = test_input($_POST['description']);
-            $startDate = test_input($_POST['start-date']);            
-            $startTime = test_input($_POST['start-time']);            
-            setReservation ($title, $description, $startDate, $startTime);
+            $startDate = test_input($_POST['start-date']);
+            $startTime = test_input($_POST['start-time']);
+            setReservation($title, $description, $startDate, $startTime);
             header("location:view/planning.php?reservationOK");
-            
+
             break;
+
 
         default:
             header("location:view/indexView.php");

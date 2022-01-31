@@ -1,8 +1,6 @@
 <?php
 session_start();
 $title = "Planning réservation Studio Son";
-include_once '../model/calendar.class.php';
-include_once '../model/planning.class.php';
 ob_start();
 
 ?>

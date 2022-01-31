@@ -6,7 +6,7 @@ require_once("Dbh.class.php");
 
 class User extends Dbh
 {
-    //returns bool if login checked is in DB 
+    //returns false if login checked is in DB 
     private function _checkUser($login)
     {
         $stmt = $this->connect()->prepare('SELECT login FROM utilisateurs WHERE login = :login ;');
@@ -15,29 +15,13 @@ class User extends Dbh
             throw new \Exception("Erreur requête 'checkUser'", 1);
         }
 
-        $resultCheck = false;
+        $checkUser = false;
         if ($stmt->rowCount() > 0) {
-            $resultCheck = false;
+            $checkUser = false;
         } else {
-            $resultCheck = true;
+            $checkUser = true;
         }
-        return $resultCheck;
-    }
-
-    //adds the user in the db
-    public function addUser($login, $password)
-    {
-        if (!$this->_checkUser($login)) {
-            throw new \Exception("Pseudo pris", 1);
-        } else {
-            $addUser = $this->connect()->prepare('INSERT INTO utilisateurs (login, password) VALUES  (:login, :password);');
-
-            $hashedpassword = password_hash($password, PASSWORD_DEFAULT);
-
-            $userCreated = $addUser->execute(array(':login' => $login, ':password' => $hashedpassword));
-
-            return $userCreated;
-        }
+        return $checkUser;
     }
 
     private function _checkPwd($login, $password)
@@ -58,15 +42,30 @@ class User extends Dbh
         return $checkpassword;
     }
 
+    //adds the user in the db
+    public function addUser($login, $password)
+    {
+        if (!$this->_checkUser($login)) {
+            throw new \Exception("Pseudo pris", 1);
+        } else {
+            $addUser = $this->connect()->prepare('INSERT INTO utilisateurs (login, password) VALUES  (:login, :password);');
+
+            $hashedpassword = password_hash($password, PASSWORD_DEFAULT);
+
+            $userCreated = $addUser->execute(array(':login' => $login, ':password' => $hashedpassword));
+
+            return $userCreated;
+        }
+    }
+
+
     //starts a session with the user's information
     public function loginUser($login, $password)
     {
         $checkpassword = $this->_checkPwd($login, $password);
 
         if ($checkpassword == false) {
-            $stmt = null;
-            header("location: ../index.php?error=wrongpassword");
-            exit();
+            throw new \Exception("Login ou mot de passe incorrect", 1);
         } elseif ($checkpassword == true) {
             $stmt = $this->connect()->prepare('SELECT id FROM utilisateurs WHERE login = ?;');
 
@@ -91,24 +90,69 @@ class User extends Dbh
         $stmt = null;
     }
 
-    //Gets User infos
-    public function modifyLogin()
+    //Modify User login
+    public function modifyUser($login, $newLogin, $password)
     {
+        $checkpassword = $this->_checkPwd($login, $password);
+
+        if ($checkpassword === false) {
+            throw new \Exception(" Mot de passe incorrect", 1);
+        } elseif ($checkpassword === true) {
+
+            $checkUser = $this->_checkUser($newLogin);
+            if ($checkUser === false) {
+                throw new \Exception("Pseudo pris", 1);
+            } elseif ($checkUser === true) {
+
+                $addUser = $this->connect()->prepare('UPDATE `utilisateurs` SET `login` = :login WHERE `utilisateurs`.`id` = :id;');
+
+                $userModified = $addUser->execute(array(':login' => $newLogin, ':id' => $_SESSION["id"]));
+
+                $_SESSION["login"] = $newLogin;
+            }
+        }
+        return $userModified;
     }
 
-    //deletes and disconnects user
-    public function delete()
+    //moModify User password
+    public function modifyPwd($login, $password, $newPwd)
     {
-        $id = $_SESSION["id"];
-        $stmt = $this->connect()->prepare('DELETE FROM `utilisateurs` WHERE `utilisateurs`.`id` = :id ');
+        $checkpassword = $this->_checkPwd($login, $password);
 
-        if (!$stmt->execute(array(':id' => $id))) {
-            throw new \Exception("Impossible de supprimer l'utilisateur", 1);
+        if ($checkpassword === false) {
+            throw new \Exception(" Mot de passe incorrect", 1);
+        } elseif ($checkpassword === true) {
+
+            $hashedpassword = password_hash($newPwd, PASSWORD_DEFAULT);
+
+            $newPwd = $this->connect()->prepare('UPDATE `utilisateurs` SET `password` = :pwd WHERE `utilisateurs`.`id` = :id;');
+
+            $pwdModified = $newPwd->execute(array(':pwd' => $hashedpassword, ':id' => $_SESSION["id"]));
+
         }
+        return $pwdModified;
+    }
 
-        session_unset();
-        session_destroy();
 
-        header("location: ../index.php");
+    //deletes and disconnects user
+    public function deleteUser($login, $password)
+    {
+        $checkpassword = $this->_checkPwd($login, $password);
+
+        if ($checkpassword === false) {
+            throw new \Exception(" Mot de passe incorrect", 1);
+        } elseif ($checkpassword === true) {
+
+            $stmt = $this->connect()->prepare('DELETE FROM `utilisateurs` WHERE `utilisateurs`.`id` = :id ');
+
+            if (!$stmt->execute(array(':id' => $_SESSION["id"]))) {
+                throw new \Exception("Impossible de supprimer l'utilisateur", 1);
+            }
+
+            session_unset();
+            session_destroy();
+
+            header("location: ../index.php");
+        }
     }
 }
