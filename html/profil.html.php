@@ -82,14 +82,30 @@ if (!isset($_SESSION['id'])) {
 
     </main>
 
-    
+    <aside>
+
+        <h1>Vos réservations</h1>
+
+            <?php
+            
+            $events = new Reservation ();
+
+            $list = $events->listEvents($_SESSION["id"]);
+
+            print_r($list);
+
+            ?>
+
+    </aside>
 
 <?php
 
-$content = ob_get_clean();
+$content = ob_get_contents();
+ob_end_clean();
+require('template.php');
+
 }
 
 
-require('template.php');
     
 ?>

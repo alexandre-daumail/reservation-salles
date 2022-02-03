@@ -15,33 +15,37 @@
 
         <header>
 
-            <ul>
+            <nav>
+                <ul>
 
-                <li><a href="index.html.php">Accueil</a></li>
 
-                <li><a href="planning.html.php">Planning</a></li>
+                    <li><a href="index.html.php">Accueil</a></li>
 
-                <?php
+                    <li><a href="planning.html.php">Planning</a></li>
 
-                    if (isset($_SESSION["id"])) {
+                    <?php
 
-                        echo "<li><a href='reservation-form.html.php'>Réserver</a></li>";
+                        if (isset($_SESSION["id"])) {
 
-                        echo "<li><a href='profil.html.php'>Profil</a></li>";
+                            echo "<li><a href='reservation-form.html.php'>Réserver</a></li>";
 
-                        echo "<li><a href='../includes/logout.inc.php'>Déconnexion</a></li>";
+                            echo "<li><a href='profil.html.php'>Profil</a></li>";
 
-                    } else {
+                            echo "<li><a href='../includes/logout.inc.php'>Déconnexion</a></li>";
 
-                        echo '<li><a href="inscription.html.php">Inscription</a></li>';
+                        } else {
 
-                        echo '<li><a href="connexion.html.php">Connexion</a></li>';
+                            echo '<li><a href="inscription.html.php">Inscription</a></li>';
 
-                    }
-                    
-                ?>
+                            echo '<li><a href="connexion.html.php">Connexion</a></li>';
 
-            </ul>
+                        }
+                        
+                    ?>
+
+                </ul>
+            
+            </nav>
             
         </header>
 
