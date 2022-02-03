@@ -3,7 +3,7 @@
 
 session_start();
 if (!isset($_SESSION['id'])) {
-    header('location:connexion.php');
+    header('location:connexion.html.php');
 } else {
     $title = "Formulaire de réservation";
     ob_start();

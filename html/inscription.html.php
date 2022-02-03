@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (isset($_SESSION["id"])){
+    header('location:profil.html.php');
+    exit();
+}else{
 $title = "Inscription";
 ob_start();
 ?>
@@ -26,5 +30,6 @@ ob_start();
 
 <?php
 $content = ob_get_clean();
+}
 require('template.php');
 ?>

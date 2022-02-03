@@ -1,7 +1,5 @@
 <?php
 
-namespace LaPlateforme\ReservationSalles\Model;
-
 require_once("Dbh.class.php");
 
 class User extends Dbh
@@ -12,7 +10,7 @@ class User extends Dbh
         $stmt = $this->connect()->prepare('SELECT login FROM utilisateurs WHERE login = :login ;');
 
         if (!$stmt->execute(array(":login" => $login))) {
-            throw new \Exception("Erreur requête 'checkUser'", 1);
+            throw new Exception("Erreur requête 'checkUser'", 1);
         }
 
         $checkUser = false;
@@ -29,11 +27,11 @@ class User extends Dbh
         $getPwd = $this->connect()->prepare('SELECT password FROM utilisateurs WHERE login = :login ;');
 
         if (!$getPwd->execute(array(':login' => $login))) {
-            throw new \Exception("Echec de connexion, contacter un admin", 1);
+            throw new Exception("Echec de connexion, contacter un admin", 1);
         }
 
         if ($getPwd->rowCount() == 0) {
-            throw new \Exception("Login ou mot de passe incorrect", 1);
+            throw new Exception("Login ou mot de passe incorrect", 1);
         }
 
         $passwordHashed = $getPwd->fetchAll(\PDO::FETCH_ASSOC);
@@ -46,7 +44,7 @@ class User extends Dbh
     public function addUser($login, $password)
     {
         if (!$this->_checkUser($login)) {
-            throw new \Exception("Pseudo pris", 1);
+            throw new Exception("Pseudo pris", 1);
         } else {
             $addUser = $this->connect()->prepare('INSERT INTO utilisateurs (login, password) VALUES  (:login, :password);');
 
@@ -62,10 +60,14 @@ class User extends Dbh
     //starts a session with the user's information
     public function loginUser($login, $password)
     {
+
+        $login = $this->test_input($login);
+        $password = $this->test_input($password);
+
         $checkpassword = $this->_checkPwd($login, $password);
 
         if ($checkpassword == false) {
-            throw new \Exception("Login ou mot de passe incorrect", 1);
+            throw new Exception("Login ou mot de passe incorrect", 1);
         } elseif ($checkpassword == true) {
             $stmt = $this->connect()->prepare('SELECT id FROM utilisateurs WHERE login = ?;');
 
@@ -81,8 +83,9 @@ class User extends Dbh
                 exit();
             }
 
-            $user = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+            session_start();
             $_SESSION["login"] = $login;
             $_SESSION["id"] = $user[0]["id"];
         }
@@ -96,12 +99,12 @@ class User extends Dbh
         $checkpassword = $this->_checkPwd($login, $password);
 
         if ($checkpassword === false) {
-            throw new \Exception(" Mot de passe incorrect", 1);
+            throw new Exception(" Mot de passe incorrect", 1);
         } elseif ($checkpassword === true) {
 
             $checkUser = $this->_checkUser($newLogin);
             if ($checkUser === false) {
-                throw new \Exception("Pseudo pris", 1);
+                throw new Exception("Pseudo pris", 1);
             } elseif ($checkUser === true) {
 
                 $addUser = $this->connect()->prepare('UPDATE `utilisateurs` SET `login` = :login WHERE `utilisateurs`.`id` = :id;');
@@ -120,7 +123,7 @@ class User extends Dbh
         $checkpassword = $this->_checkPwd($login, $password);
 
         if ($checkpassword === false) {
-            throw new \Exception(" Mot de passe incorrect", 1);
+            throw new Exception(" Mot de passe incorrect", 1);
         } elseif ($checkpassword === true) {
 
             $hashedpassword = password_hash($newPwd, PASSWORD_DEFAULT);
@@ -140,13 +143,13 @@ class User extends Dbh
         $checkpassword = $this->_checkPwd($login, $password);
 
         if ($checkpassword === false) {
-            throw new \Exception(" Mot de passe incorrect", 1);
+            throw new Exception(" Mot de passe incorrect", 1);
         } elseif ($checkpassword === true) {
 
             $stmt = $this->connect()->prepare('DELETE FROM `utilisateurs` WHERE `utilisateurs`.`id` = :id ');
 
             if (!$stmt->execute(array(':id' => $_SESSION["id"]))) {
-                throw new \Exception("Impossible de supprimer l'utilisateur", 1);
+                throw new Exception("Impossible de supprimer l'utilisateur", 1);
             }
 
             session_unset();
@@ -155,4 +158,18 @@ class User extends Dbh
             header("location: ../index.php");
         }
     }
+
+    //Disconnect user
+    public function disconnect()
+    {
+        session_start();
+        session_unset();
+        session_destroy();
+
+        header("location: ../html/index.html.php?disconnected");
+
+        exit();
+
+    }
+
 }
