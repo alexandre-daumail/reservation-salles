@@ -1,12 +1,20 @@
 <?php
+session_start();
+require_once('class-autoload.inc.php');
+function test_input($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
 
-require_once('./model/reservation.class.php');
 
 //enter reservation-form data in reservations table
 function setReservation ($title, $description, $startDate, $startTime){
 
     if (empty($title) || empty($description) || empty($startDate) || empty($startTime)) {
-        throw new Exception("Veuillez remplir tous les camps", 1);
+        throw new Exception("Veuillez remplir tous les champs", 1);
     }
 
     if (!preg_match("/^[a-z0-9 .\-]+$/i", $title)) {
@@ -22,7 +30,7 @@ function setReservation ($title, $description, $startDate, $startTime){
 
     $fin = date('Y-m-d H:i:s', strtotime( $debut . "+1 hours" ));
 
-    $id_utilisateur = $_SESSION ["id"];
+    $id_utilisateur = $_SESSION["id"];
 
     //check if $event is before current time
     if ($debut < date('Y-m-d H:i:s',time())){
@@ -30,7 +38,7 @@ function setReservation ($title, $description, $startDate, $startTime){
     }else{
 
         //proccess the info given by the user to create a reservation of his event
-        $reservation = new LaPlateforme\ReservationSalles\Model\Reservation ();
+        $reservation = new Reservation ();
 
         $eventCreated = $reservation->addEvent($title, $description, $debut, $fin, $id_utilisateur);
     }
@@ -38,4 +46,21 @@ function setReservation ($title, $description, $startDate, $startTime){
     if ($eventCreated === false) {
         throw new Exception("Impossible de créer la réservation", 1);
     }
+}
+
+
+try {
+
+    if (isset($_POST)){
+        $title = test_input($_POST["title"]);
+        $description = test_input($_POST["description"]);
+        $startDate = test_input($_POST["startDate"]);
+        $startTime = test_input($_POST["startTime"]);
+        setReservation ($title, $description, $startDate, $startTime);
+        header("location:../html/profil.html.php");
+	}
+	
+} catch (Exception $e) {
+
+    echo 'Erreur : ' . $e->getMessage();
 }

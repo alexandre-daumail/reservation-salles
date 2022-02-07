@@ -1,17 +1,30 @@
 
 - module User
+
     - simplifier classe user (surtout login) -> fait
     - débuger login -> fait
-    - ajouter méthode modify pwd
-    - ajouter méthode modify login
-    - ajouter méthode delete user
+    - ajouter méthode modify pwd -> fait
+    - ajouter méthode modify login -> fait
+    - ajouter méthode delete user -> fait // AJOUTER REQUETE SUPRESSION DES EVENTS DE L'UTILISATEUR SI CE DERNIER EN A ENREGISTRE
 
 - module planning
 
+    - afficher semaine
+    - afficher event dans case
+    - lien pour enregistrer event
+    - lien pour acceder aux events de l'utilisateur loggé
+
 - module réservation
+
     - addEvent -> fait
+
+    PROBLEME: COMMENT INTEGRER CES FONCTIONS?
     - modifyEvent
     - checkEvent
     - deleteEvent
+    - showEvents
 
 - gestion affichage erreurs
+
+
+pmv produit minimum vital
