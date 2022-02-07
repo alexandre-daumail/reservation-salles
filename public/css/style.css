@@ -1,3 +1,34 @@
+header, footer
+{
+    background-color: black;
+    margin: 50px;
+    color: white;
+    justify-content: center;
+    text-align:center;
+    
+}
+
+nav ul
+{
+    display: flex;
+    list-style-type: none;
+    margin: 50px;
+    padding: 2em;
+}
+
+nav ul li a 
+{
+    color: white;
+    margin: 50px;
+
+}
+
+a
+{
+    text-decoration: none;
+    color: blue;
+}
+
 main
 {
     display: flex;
@@ -6,17 +37,6 @@ main
     align-content:center;
 }
 
-header ul
-{
-    display: flex;
-    background-color: darkgoldenrod;
-    list-style-type: none;
-}
-
-header ul li
-{
-    margin: 50px;
-}
 
 form
 {
@@ -60,11 +80,6 @@ button:hover {
     opacity: 0.8;
   }  
 
-a
-{
-    text-decoration: none;
-    color: blue;
-}
 
 input:invalid+span:after {
     position: absolute;
