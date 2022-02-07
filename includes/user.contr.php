@@ -18,7 +18,7 @@ try {
             $pwdrepeat = test_input($_POST["pwdrepeat"]);
 
             if (empty($login) || empty($password) || empty($pwdrepeat)) {
-                throw new Exception("Veuillez remplir tous les camps", 1);
+                throw new Exception("Veuillez remplir tous les champs", 1);
             }
 
             if (!preg_match("/^[a-zA-Z0-9]*$/", $login)) {
@@ -112,7 +112,7 @@ function signupUser($login, $password, $pwdrepeat)
     $pwdrepeat = test_input($_POST["pwdrepeat"]);
 
     if (empty($login) || empty($password) || empty($pwdrepeat)) {
-        throw new Exception("Veuillez remplir tous les camps", 1);
+        throw new Exception("Veuillez remplir tous les champs", 1);
     }
 
     if (!preg_match("/^[a-zA-Z0-9]*$/", $login)) {
@@ -140,7 +140,7 @@ function loginUser($login, $password)
     $password = $_POST["password"];
 
     if (empty($login) || empty($password)) {
-        throw new Exception("Veuillez remplir tous les camps", 1);
+        throw new Exception("Veuillez remplir tous les champs", 1);
     }
 
     if (!preg_match("/^[a-zA-Z0-9]*$/", $login)) {
@@ -160,7 +160,7 @@ function modifyUser($login, $newLogin, $password)
     $password = test_input($_POST["password"]);
 
     if (empty($login) || empty($password)) {
-        throw new Exception("Veuillez remplir tous les camps", 1);
+        throw new Exception("Veuillez remplir tous les champs", 1);
     }
 
     if (!preg_match("/^[a-zA-Z0-9]*$/", $login)) {
@@ -175,7 +175,7 @@ function modifyUser($login, $newLogin, $password)
 function modifyPwd($login, $newPwd, $pwdRepeat, $password)
 {
     if (empty($newPwd) || empty($pwdRepeat) || empty($password)) {
-        throw new Exception("Veuillez remplir tous les camps", 1);
+        throw new Exception("Veuillez remplir tous les champs", 1);
     }
 
     if ($newPwd !== $pwdRepeat) {
@@ -195,7 +195,7 @@ function modifyPwd($login, $newPwd, $pwdRepeat, $password)
 function deleteUser($login, $password)
 {
     if (empty($password)) {
-        throw new Exception("Veuillez remplir tous les camps", 1);
+        throw new Exception("Veuillez remplir tous les champs", 1);
     }
 
     $user = new LaPlateforme\ReservationSalles\Model\User;

@@ -1,56 +1,84 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
+<head>
 
-        <meta charset="utf-8" />
+    <meta charset="utf-8" />
 
-        <title><?= $title ?></title>
+    <title><?= $title ?></title>
 
-        <link href="../public/css/style.css" rel="stylesheet" />
+    <link href="../public/css/style.css" rel="stylesheet" />
 
-    </head>
+</head>
 
-    <body>
+<body>
 
-        <header>
+    <header>
 
-            <nav>
-                <ul>
+        <nav>
 
+            <ul>
 
-                    <li><a href="index.html.php">Accueil</a></li>
+                <li><a href="index.html.php">Accueil</a></li>
 
-                    <li><a href="planning.html.php">Planning</a></li>
+                <li><a href="planning.html.php">Planning</a></li>
 
-                    <?php
+                <?php
 
-                        if (isset($_SESSION["id"])) {
+                if (isset($_SESSION["id"])) {
 
-                            echo "<li><a href='reservation-form.html.php'>Réserver</a></li>";
+                    echo "<li><a href='reservation-form.html.php'>Réserver</a></li>";
 
-                            echo "<li><a href='profil.html.php'>Profil</a></li>";
+                    echo "<li><a href='profil.html.php'>Profil</a></li>";
 
-                            echo "<li><a href='../includes/logout.inc.php'>Déconnexion</a></li>";
+                    echo "<li><a href='../includes/logout.inc.php'>Déconnexion</a></li>";
+                } else {
 
-                        } else {
+                    echo '<li><a href="inscription.html.php">Inscription</a></li>';
 
-                            echo '<li><a href="inscription.html.php">Inscription</a></li>';
+                    echo '<li><a href="connexion.html.php">Connexion</a></li>';
+                }
 
-                            echo '<li><a href="connexion.html.php">Connexion</a></li>';
+                ?>
 
-                        }
-                        
-                    ?>
+            </ul>
 
-                </ul>
-            
-            </nav>
-            
-        </header>
+        </nav>
 
-        <?= $content ?>
+    </header>
 
-    </body>
+    <?= $content ?>
+
+    <footer>
+        <nav>
+            <ul>
+                <li><a href="index.html.php">Accueil</a></li>
+
+                <li><a href="planning.html.php">Planning</a></li>
+
+                <?php
+                if (isset($_SESSION["id"])) {
+
+                    echo "<li><a href='reservation-form.html.php'>Réserver</a></li>";
+
+                    echo "<li><a href='profil.html.php'>Profil</a></li>";
+
+                    echo "<li><a href='../includes/logout.inc.php'>Déconnexion</a></li>";
+                } else {
+
+                    echo '<li><a href="inscription.html.php">Inscription</a></li>';
+
+                    echo '<li><a href="connexion.html.php">Connexion</a></li>';
+                }
+
+                ?>
+
+            </ul>
+
+        </nav>
+        
+    </footer>
+
+</body>
 
 </html>

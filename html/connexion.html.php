@@ -1,5 +1,7 @@
 <?php
+
 session_start();
+
 if (isset($_SESSION["id"])) {
     header('location:profil.html.php');
     exit();
@@ -16,14 +18,14 @@ if (isset($_SESSION["id"])) {
                 <legend>Connexion</legend>
 
                 <label for="login">Pseudo</label>
-                <input type="text" name="login" id="login" placeholder="Nom d'utilisateur">
+                <input type="text" name="login" id="login" placeholder="Nom d'utilisateur" required>
 
                 <label for="pwd">Mot de passe</label>
-                <input type="password" id="pwd" name="password" placeholder="Mot de passe">
+                <input type="password" id="pwd" name="password" placeholder="Mot de passe" required>
 
                 <button type="submit" name="submit">Connexion</button>
 
-                <p>Vous êtes nouveau ici? <a href="inscription.php">S'inscrire</a></p>
+                <p>Vous êtes nouveau ici? <a href="inscription.html.php">S'inscrire</a></p>
 
             </fieldset>
 

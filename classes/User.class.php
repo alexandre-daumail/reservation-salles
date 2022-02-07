@@ -96,6 +96,10 @@ class User extends Dbh
     //Modify User login
     public function modifyUser($login, $newLogin, $password)
     {
+
+        $newLogin = $this->test_input($newLogin);
+        $password = $this->test_input($password);
+
         $checkpassword = $this->_checkPwd($login, $password);
 
         if ($checkpassword === false) {
@@ -151,11 +155,8 @@ class User extends Dbh
             if (!$stmt->execute(array(':id' => $_SESSION["id"]))) {
                 throw new Exception("Impossible de supprimer l'utilisateur", 1);
             }
-
-            session_unset();
-            session_destroy();
-
-            header("location: ../index.php");
+            
+            $this->disconnect();
         }
     }
 

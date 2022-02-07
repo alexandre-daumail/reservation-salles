@@ -10,7 +10,7 @@ try {
         $password = $_POST["password"];
         
         if (empty($login) || empty($password)) {
-            throw new Exception("Veuillez remplir tous les camps", 1);
+            throw new Exception("Veuillez remplir tous les champs", 1);
         }
         
         if (!preg_match("/^[a-zA-Z0-9]*$/", $login)) {

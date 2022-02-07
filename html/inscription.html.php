@@ -9,23 +9,29 @@ ob_start();
 ?>
 
 <main>
-    <form action="<?= htmlspecialchars('../index.php?action=inscription'); ?>" method="post">
 
-        <h1>Création d'un compte utilisateur</h1>
-        <hr>
+   <form action="../includes/inscription.inc.php" method="post">
 
-        <label for="login"> Login </label>
-        <input type="text" class="box-input" name="login" id="login" placeholder="Nom d'utilisateur">
+        <fieldset>
 
-        <label for="password"> Mot de passe </label> <input type="password" placeholder="Mot de passe" name="password" id="password">
+                <legend>Création d'un compte utilisateur</legend>
+                
+                    <label for="login"> Login </label>
+                    <input type="text" class="box-input" name="login" id="login" placeholder="Nom d'utilisateur" required>
+                    
+                    <label for="password"> Mot de passe </label> <input type="password" placeholder="Mot de passe" name="password" id="password" required>
 
-        <label for="pwdrepeat"> Confirmation Mdp </label>
-        <input type="password" placeholder="Confirmation Mdp" name="pwdrepeat" id="pwdrepeat">
-        <button>inscription</button>
-        <hr>
+                    <label for="pwdrepeat"> Confirmation Mdp </label>
+                    <input type="password" placeholder="Confirmation Mdp" name="pwdrepeat" id="pwdrepeat" required>
+                    
+                    <button type="submit" name="inscription">inscription</button>
 
-        <p class="box-register">Déjà inscrit? <a href="connexion.php">Connectez-vous ici</a></p>
+                <p class="box-register">Déjà inscrit? <a href="connexion.html.php">Connectez-vous ici</a></p>
+
+        </fieldset>
+
     </form>
+
 </main>
 
 <?php

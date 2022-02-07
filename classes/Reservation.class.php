@@ -54,12 +54,32 @@ class Reservation extends Dbh
 
         if ($list->rowCount() == 0) {
             echo "aucun event enregistré";
-            exit();
+            
         }
 
         $eventList = $list->fetchAll(PDO::FETCH_ASSOC);
 
 
         return $eventList;
+    }
+
+    public function getEvent($id_event)
+    {
+        $getEvent = $this->connect()->prepare("SELECT id_utilisateur, login, titre, description, debut, fin FROM reservations
+        INNER JOIN utilisateurs ON reservations.id_utilisateur = utilisateurs.id WHERE reservations.id = :id");
+
+        if (!$getEvent->execute(array(':id' => $id_event))) {
+            throw new Exception("impossible de trouver event", 1);            
+        }
+
+        if ($getEvent->rowCount() == 0) {
+            echo "aucun event enregistré";
+            
+        }
+
+        $res = $getEvent->fetchAll(PDO::FETCH_ASSOC);
+
+
+        return $res;
     }
 }
