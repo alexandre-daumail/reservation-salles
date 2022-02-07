@@ -1,24 +1,38 @@
-h1, h3
+form
 {
     text-align:center;
+    padding: 16px;
 }
-h3
+
+label
 {
-    background-color:black;
-    color:white;
     font-size:0.9em;
     margin-bottom:0px;
 }
-.news p
-{
-    background-color:#CCCCCC;
-    margin-top:0px;
-}
-.news
-{
-    width:70%;
-    margin:auto;
-}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+
+/* Set a style for all buttons */
+button {
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+button:hover {
+    opacity: 0.8;
+  }  
 
 a
 {
@@ -26,6 +40,17 @@ a
     color: blue;
 }
 
+input:invalid+span:after {
+    position: absolute;
+    content: '✖';
+    padding-left: 5px;
+}
+  
+input:valid+span:after {
+    position: absolute;
+    content: '✓';
+    padding-left: 5px;
+}
 /*******************************Calendar Top Navigation*********************************/
 div#calendar{
   margin:0px auto;
@@ -43,7 +68,7 @@ div#calendar div.box{
     background-color:   #787878 ;      
 }
  
-div#calendar div.header{
+div#calendar div.banner{
     line-height:40px;  
     vertical-align:middle;
     position:absolute;
@@ -54,7 +79,7 @@ div#calendar div.header{
     text-align:center;
 }
  
-div#calendar div.header a.prev,div#calendar div.header a.next{ 
+div#calendar div.banner a.prev,div#calendar div.banner a.next{ 
     position:absolute;
     top:0px;   
     height: 17px;
@@ -64,17 +89,17 @@ div#calendar div.header a.prev,div#calendar div.header a.next{
     color:#FFF;
 }
  
-div#calendar div.header span.title{
+div#calendar div.banner span.title{
     color:#FFF;
     font-size:18px;
 }
  
  
-div#calendar div.header a.prev{
+div#calendar div.banner a.prev{
     left:0px;
 }
  
-div#calendar div.header a.next{
+div#calendar div.banner a.next{
     right:0px;
 }
  
@@ -147,3 +172,4 @@ div#calendar ul.dates li{
 div.clear{
     clear:both;
 }
+

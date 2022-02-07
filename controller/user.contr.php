@@ -24,7 +24,7 @@ function signupUser($login, $password, $pwdrepeat)
         throw new Exception("Les mots de passe ne correspondent pas", 1);
     }
 
-    $userManager = new User();
+    $userManager = new LaPlateforme\ReservationSalles\Model\User();
 
     $userCreated = $userManager->addUser($login, $password, $pwdrepeat);
 
@@ -44,14 +44,14 @@ function loginUser($login, $password)
         throw new Exception("Pseudo incorrect", 1);
     }
 
-    $user = new User;
+    $user = new LaPlateforme\ReservationSalles\Model\User;
 
     $user->loginUser($login, $password);
 }
 
 function modifyUser($login, $password)
 {
-    if (empty($login) || empty($password) || empty($pwdrepeat)) {
+    if (empty($login) || empty($password)) {
         throw new Exception("Veuillez remplir tous les camps", 1);
     }
 
@@ -59,7 +59,7 @@ function modifyUser($login, $password)
         throw new Exception("Pseudo incorrect", 1);
     }
 
-    $user = new User;
+    $user = new LaPlateforme\ReservationSalles\Model\User;
 
     $user->modifyUser($login, $password);
 }

@@ -9,9 +9,11 @@ ob_start();
 
         <h1>Connexion</h1>
 
-        <input type="text" name="login" placeholder="Nom d'utilisateur">
+        <label for="login">Pseudo</label>
+        <input type="text" name="login" id="login" placeholder="Nom d'utilisateur">
 
-        <input type="password" name="password" placeholder="Mot de passe">
+        <label for="pwd">Mot de passe</label>
+        <input type="password" id="pwd" name="password" placeholder="Mot de passe">
 
         <button type="submit" name="submit">Connexion</button>
 
