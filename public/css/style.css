@@ -1,26 +1,43 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    color: #456990
+
+}
 header, footer
 {
-    background-color: black;
-    margin: 50px;
+    background-color: #EF767A;
     color: white;
     justify-content: center;
     text-align:center;
+    color: #456990
     
+}
+
+h1 {
+    padding: 30px;
+    text-align:center;
+}
+nav > ul > li {
+    background-color: #49BEAA;
 }
 
 nav ul
 {
+    background-color: #49DCB1;
     display: flex;
     list-style-type: none;
     margin: 50px;
     padding: 2em;
+    display: flex;
+    justify-content: center;
+    border-radius: 25px;
 }
 
 nav ul li a 
 {
-    color: white;
     margin: 50px;
-
+    color: #456990
 }
 
 a
@@ -35,6 +52,7 @@ main
     flex-direction: column;
     flex-wrap: wrap;
     align-content:center;
+    background-color: #eeb868;
 }
 
 
@@ -61,19 +79,20 @@ input[type=text], input[type=password] {
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid #456990;
     box-sizing: border-box;
   }
 
 /* Set a style for all buttons */
 button {
-    background-color: #04AA6D;
+    background-color: #49BEAA;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
     cursor: pointer;
-    width: 100%;
+    width: 30%;
+	border-radius: 25px
   }
   
 button:hover {
@@ -92,3 +111,20 @@ input:valid+span:after {
     content: '✓';
     padding-left: 5px;
 }
+
+table,
+    td {
+        border: 2px solid #456990;
+        padding: 20px;
+        margin: 60px;
+
+    }
+
+    th {
+        border: 2px solid #456990;
+        padding: 20px;
+    }
+
+    img{
+        max-width: 75px;
+    }

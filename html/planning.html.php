@@ -9,7 +9,7 @@ ob_start();
 
 <main>
 
-    <h1>Bienvenue <?= (isset($_SESSION["login"]))? $_SESSION["login"] : ""?>, voici le planning de la semaine :</h1>
+    <h1>Bienvenue<?= (isset($_SESSION["login"]))? " " . $_SESSION["login"] : ""?>, voici le planning de la semaine :</h1>
 
     <?php
 
@@ -17,22 +17,43 @@ ob_start();
 
     $res = $planning->getReservation();
 
-    if (isset($_GET['week'])) {
-        $week = $_GET['week'];
-        echo "<div class='next-prev'><a href='planning.html.php?week=" . ($week - 1) . "'>PREV</a>";
-        echo "<a href='planning.html.php?week=" . ($week + 1) . "'>NEXT</a></div>";
-    } else {
-        echo "<div class='next-prev'><a href='planning.html.php?week=-1'>PREV</a>";
-        echo "<a href='planning.html.php?week=1'>NEXT</a></div>";
-    }
 
     ?>
 
     <table>
 
         <thead>
+
             <tr>
+                
+                <?php
+                    
+                    if (isset($_GET['week'])) {
+
+                        $week = $_GET['week'];
+
+                        echo "<th><a href='planning.html.php?week=" . ($week - 1) . "'><img src='../public/images/prev.png' alt='logo lien semaine précédente'></a></th>";
+
+                        echo "<th colspan='6'></th>";
+                        
+                        echo "<th><a href='planning.html.php?week=" . ($week + 1) . "'><img src='../public/images/next.png' alt='logo lien semaine suivante'></a></th>";
+                    } else {
+
+                        echo "<th id='prev'><a href='planning.html.php?week=-1'><img src='../public/images/prev.png' alt='logo lien semaine précédente'></a></th>";
+
+                        echo "<th colspan='6'></th>";
+
+                        echo "<th><a href='planning.html.php?week=1'><img src='../public/images/next.png' alt='logo lien semaine suivante'></a></th>";
+                    }               
+        
+                ?>
+
+            </tr>
+
+            <tr>
+                
                 <th></th>
+
                 <?php
                 if (isset($_GET['week'])) {
                     $date = new DateTime("mon this week $week weeks");
@@ -72,7 +93,7 @@ ob_start();
             <?php
             // $h pr les horaires, $c pour les cases. 
             for ($h = 8; $h < 19; $h++) {
-                echo "<tr><td>" . $h . "h-" . ($h + 1) . "h</td>";
+                echo "<tr><td>" . $h . "H00  " . ($h + 1) . "H00</td>";
                 for ($c = 1; $c <= 7; $c++) {
                     echo "<td>";
                     foreach ($res as $value) {
