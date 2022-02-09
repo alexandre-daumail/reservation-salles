@@ -15,6 +15,4 @@
 - `reservation.php`
 - `reservation-form.php`
 
-Ces fichiers sont ceux demandés dans la consigne du projet.  Cependant, afin de m'initier à l'architecture MVC, je vais devoir changer ces noms.
-
-7$c14vxU
+Ces fichiers sont ceux demandés dans la consigne du projet.
