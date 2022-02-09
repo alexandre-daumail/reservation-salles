@@ -62,5 +62,7 @@ try {
 	
 } catch (Exception $e) {
 
-    echo 'Erreur : ' . $e->getMessage();
+    session_start();
+    $_SESSION["error"] = $e->getMessage();
+    header('location:../html/reservation-form.html.php');
 }

@@ -59,19 +59,10 @@ try {
 } 
 
 catch (Exception $e) {
+    
     session_start();
     $_SESSION["error"] = $e->getMessage();
     header('location:../html/inscription.html.php');
     
 }
 
-function deleteUser($login, $password)
-{
-    if (empty($password)) {
-        throw new Exception("Veuillez remplir tous les camps", 1);
-    }
-
-    $user = new User;
-
-    $user->deleteUser($login, $password);
-}

@@ -66,5 +66,7 @@ try {
     }
 } catch (Exception $e) {
 
-    echo 'Erreur : ' . $e->getMessage();
+    session_start();
+    $_SESSION["error"] = $e->getMessage();
+    header('location:../html/profil.html.php');
 }

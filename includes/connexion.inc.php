@@ -20,12 +20,15 @@ try {
         $user = new User;
         
         $user->loginUser($login, $password);
-        // echo"ok";
-        // die();
+
         header("location:..\html\profil.html.php");
+        
     }
     
 } catch (Exception $e) {
 
-    echo 'Erreur : ' . $e->getMessage();
+    session_start();
+    $_SESSION["error"] = $e->getMessage();
+    header('location:../html/connexion.html.php');
+
 }

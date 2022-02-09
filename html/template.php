@@ -54,7 +54,12 @@
     </header>
 
     <aside>
-        <p><?= (isset($_SESSION["error"])) ? $_SESSION["error"] : null ?></p>
+            <?php 
+            if(isset($_SESSION["error"])) {
+                echo $_SESSION["error"];
+                unset($_SESSION["error"]);
+            } 
+            ?>
     </aside>
 
     <?= $content ?>
