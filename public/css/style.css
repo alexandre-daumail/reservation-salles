@@ -55,6 +55,11 @@ main
     background-color: #eeb868;
 }
 
+aside
+{
+    text-align: center;
+    font-weight: bold;
+}
 
 form
 {

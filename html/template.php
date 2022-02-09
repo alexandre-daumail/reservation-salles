@@ -53,6 +53,10 @@
 
     </header>
 
+    <aside>
+        <p><?= (isset($_SESSION["error"])) ? $_SESSION["error"] : null ?></p>
+    </aside>
+
     <?= $content ?>
 
     <footer>
