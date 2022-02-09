@@ -63,6 +63,12 @@ form
     padding: 16px;
 }
 
+form p
+{
+    font-size: large;
+    font-weight: bold;
+}
+
 legend
 {
     font-size: 2em;
