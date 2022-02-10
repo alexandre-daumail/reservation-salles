@@ -17,12 +17,12 @@ function setReservation ($title, $description, $startDate, $startTime){
         throw new Exception("Veuillez remplir tous les champs", 1);
     }
 
-    if (!preg_match("/^[a-z0-9 .\-]+$/i", $title)) {
+    if (!preg_match("/^[a-z0-9.\-]+$/i", $title)) {
         throw new Exception("Titre incorrect", 1);
     }
 
-    if (!preg_match("/^[a-z0-9 .\-]+$/i", $description)) {
-        throw new Exception("Titre incorrect", 1);
+    if (!preg_match("/^[a-z0-9.\-]+$/i", $description)) {
+        throw new Exception("Description incorrecte", 1);
     }
 
     //$debut is a string var defining the start time of the reservation from the user
@@ -57,7 +57,8 @@ try {
         $startDate = test_input($_POST["startDate"]);
         $startTime = test_input($_POST["startTime"]);
         setReservation ($title, $description, $startDate, $startTime);
-        header("location:../html/profil.html.php");
+        $_SESSION["success"] = "Votre réservation a bien été prise en compte";
+        header("location:../html/planning.html.php");
 	}
 	
 } catch (Exception $e) {

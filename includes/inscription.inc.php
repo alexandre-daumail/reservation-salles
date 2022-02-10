@@ -49,7 +49,9 @@ try {
             }
             
             else{			
-        
+            
+            session_start();
+            $_SESSION["success"] = "Votre profil a bien été créé";
             header("location:..\html\profil.html.php");
     
             }				

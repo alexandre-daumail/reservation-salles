@@ -38,6 +38,7 @@
                     echo "<li><a href='profil.html.php'>🆔Profil</a></li>";
 
                     echo "<li><a href='../includes/logout.inc.php'>🛑Déconnexion</a></li>";
+
                 } else {
 
                     echo '<li><a href="inscription.html.php">Inscription</a></li>';
@@ -46,6 +47,8 @@
                 }
 
                 ?>
+
+                <li><a href="https://github.com/alexandre-daumail/reservation-salles">Mon Git Hub</a></li>
 
             </ul>
 
@@ -58,7 +61,12 @@
             if(isset($_SESSION["error"])) {
                 echo $_SESSION["error"];
                 unset($_SESSION["error"]);
-            } 
+            }
+            
+            if (isset($_SESSION["success"])){
+                echo $_SESSION["success"];
+                unset($_SESSION["success"]);
+            }
             ?>
     </aside>
 

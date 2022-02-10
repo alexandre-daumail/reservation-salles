@@ -4,7 +4,7 @@ if (!isset($_SESSION['id'])) {
     header('location:connexion.html.php');
 } else {
     require_once('../includes/class-autoload.inc.php');
-    $title = " 📝Réservation";
+    $title = "Réservation";
     ob_start();
 
     $reservation = new Reservation;
